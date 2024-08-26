@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 19.08.2024 08:59:27
+// Create Date: 26.08.2024 08:39:07
 // Design Name: 
-// Module Name: RISC_V_top
+// Module Name: Register_sim
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -19,22 +19,22 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-
-module RISC_V_top(
-
-    );
-endmodule
-
-module register(output logic [31:0] Q, input logic [31:0] D,clk,rst);
-
-    always_ff @(posedge clk or posedge rst) begin
-       if(rst)
-         Q <=32'b0; 
-       else
-         Q <= D;
-    end 
+module Register_sim();
+    logic [31:0] Q,D;
+    logic clk,rst;
     
-endmodule:register
-
+    register reg1(Q,D,clk,rst);
+    
+    initial begin
+    
+    #5 Q = 'hffa4; //if i dont specify the size is 32 bits default 
+       D = 'h00ff;
+       clk = 0;
+       rst = 0;
+    
+    #5 clk = 1;
+    
+    end
+endmodule
 
 
