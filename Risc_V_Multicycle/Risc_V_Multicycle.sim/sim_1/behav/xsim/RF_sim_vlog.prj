@@ -1,7 +1,7 @@
 # compile verilog/system verilog design source files
 sv xil_defaultlib  \
 "../../../../Risc_V_Multicycle.srcs/sources_1/new/RISC_V_top.sv" \
-"../../../../Risc_V_Multicycle.srcs/sim_1/new/Register_sim.sv" \
+"../../../../Risc_V_Multicycle.srcs/sim_1/new/RF_sim.sv" \
 
 # compile glbl module
 verilog xil_defaultlib "glbl.v"

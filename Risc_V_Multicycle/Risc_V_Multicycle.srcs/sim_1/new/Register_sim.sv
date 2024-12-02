@@ -21,20 +21,30 @@
 
 module Register_sim();
     logic [31:0] Q,D;
-    logic clk,rst;
+    logic clk,rst,en;
     
-    register reg1(Q,D,clk,rst);
+    register reg1(Q,D,clk,rst,en);
     
     initial begin
     
-    #5 Q = 'hffa4; //if i dont specify the size is 32 bits default 
-       D = 'h00ff;
-       clk = 0;
-       rst = 0;
-    
-    #5 clk = 1;
+        #5 Q = 'hffa4; //if i dont specify the size is 32 bits default 
+           D = 'h00ff;
+           clk = 0;
+           rst = 0;
+           en=1;
+           
+           #5 rst = 1;
+           #1 rst = 0;
+           #5 clk = 1;
+           #5 clk = 0;D='h0fff;
+           #5 clk = 1;
+           #5 clk = 0;D='h0fff;
+           #5 clk = 1;
+           #5 rst = 1;
+           #1 rst = 0;
     
     end
+    
 endmodule
 
 
