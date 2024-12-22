@@ -3,10 +3,10 @@
 Oct 14 2022
 05:20:55
 C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.sim/sim_1/behav/xsim/glbl.v,1665704903,verilog,,,,glbl,,uvm,,,,,,
-C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sim_1/new/Alu_sim.sv,1727402478,systemVerilog,,,,Alu_sim,,uvm,,,,,,
-C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sim_1/new/Control_Unit_Sim.sv,1733493465,systemVerilog,,,,Control_Unit_Sim,,uvm,,,,,,
-C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sim_1/new/LW_test.sv,1734886120,systemVerilog,,,,LW_test,,uvm,,,,,,
-C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sim_1/new/RF_sim.sv,1734879418,systemVerilog,,,,RF_sim,,uvm,,,,,,
-C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sim_1/new/Register_sim.sv,1727400110,systemVerilog,,,,Register_sim,,uvm,,,,,,
+C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sim_1/new/Alu_sim.sv,1727402478,systemVerilog,,C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sim_1/new/Control_Unit_Sim.sv,,Alu_sim,,uvm,,,,,,
+C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sim_1/new/Control_Unit_Sim.sv,1733493465,systemVerilog,,C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sim_1/new/LW_test.sv,,Control_Unit_Sim,,uvm,,,,,,
+C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sim_1/new/LW_test.sv,1734903036,systemVerilog,,C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sim_1/new/RF_sim.sv,,LW_test,,uvm,,,,,,
+C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sim_1/new/RF_sim.sv,1734879418,systemVerilog,,C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sources_1/new/RISC_V_top.sv,,RF_sim,,uvm,,,,,,
+C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sim_1/new/Register_sim.sv,1727400110,systemVerilog,,C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sim_1/new/main_fsm_sim.sv,,Register_sim,,uvm,,,,,,
 C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sim_1/new/main_fsm_sim.sv,1733498529,systemVerilog,,,,main_fsm_sim,,uvm,,,,,,
-C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sources_1/new/RISC_V_top.sv,1734894594,systemVerilog,,C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sim_1/new/LW_test.sv,,ALU;ALU_decoder;Control_Unit;RISC_V_top;extend;instr_data_memory;instr_decoder;main_FSM;mux_2;mux_3;register;register_file,,uvm,,,,,,
+C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sources_1/new/RISC_V_top.sv,1734898361,systemVerilog,,C:/Users/Asus/Vivado_Projects/RISC-V-processor/Risc_V_Multicycle/Risc_V_Multicycle.srcs/sim_1/new/LW_test.sv,,ALU;ALU_decoder;Control_Unit;RISC_V_top;extend;instr_data_memory;instr_decoder;main_FSM;mux_2;mux_3;register;register_file,,uvm,,,,,,

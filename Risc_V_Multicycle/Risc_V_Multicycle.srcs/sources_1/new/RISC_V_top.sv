@@ -289,7 +289,8 @@ module main_FSM(input logic [6:0] op, input logic rst, clk,
                     
                    
                     //Next State
-                    NextState = S2;
+                    if (op == 7'b0000011 || op == 7'b0100011)
+                        NextState = S2;
                 end
                 
                 
@@ -313,9 +314,10 @@ module main_FSM(input logic [6:0] op, input logic rst, clk,
                     
                    
                     //Next State
-                    NextState = S3;
-                
-                
+                    if(op == 7'b0000011)
+                        NextState = S3;
+                    else if(op == 7'b0100011)
+                        NextState = S5;
                 end
 
             S3: begin//MemRead
@@ -369,11 +371,31 @@ module main_FSM(input logic [6:0] op, input logic rst, clk,
                 end
                 
                 
+            S5: begin //MemWrite
+                
+                //Write enable signals(default 0)
+                    RegWrite = 0;
+                    MemWrite = 1;
+                    IRWrite = 0;
+                    PCUpdate = 0;
+                    Branch = 0;
+                    
+                    //Other signals (default X)
+                    
+                    AdrSrc = 1'b1;//1 bit
+                    
+                    ResultSrc = 2'b00; //2 bit
+                    ALUSrcA = 2'bxx;
+                    ALUSrcB = 2'bxx;
+                    ALUOp = 2'bxx;
+                    
+                   
+                    //Next State
+                    NextState = S0;
                 
                 
-                
-                
-                
+                end 
+     
             4'bx: begin
                 
                 //Write enable signals(default 0)

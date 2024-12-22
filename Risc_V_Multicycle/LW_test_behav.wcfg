@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
-      <ZoomEndTime time="118.787 ns"></ZoomEndTime>
-      <Cursor1Time time="110.000 ns"></Cursor1Time>
+      <ZoomStartTime time="274.002 ns"></ZoomStartTime>
+      <ZoomEndTime time="335.353 ns"></ZoomEndTime>
+      <Cursor1Time time="161.727 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="156"></NameColumnWidth>
+      <NameColumnWidth column_width="148"></NameColumnWidth>
       <ValueColumnWidth column_width="90"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="17" />
+   <WVObjectSize size="7" />
    <wvobject fp_name="/LW_test/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -28,13 +28,17 @@
       <obj_property name="ElementShortName">reset</obj_property>
       <obj_property name="ObjectShortName">reset</obj_property>
    </wvobject>
-   <wvobject fp_name="/LW_test/RV/i_d_mem/IRWrite" type="logic">
-      <obj_property name="ElementShortName">IRWrite</obj_property>
-      <obj_property name="ObjectShortName">IRWrite</obj_property>
+   <wvobject fp_name="/LW_test/RV/PC" type="array">
+      <obj_property name="ElementShortName">PC[31:0]</obj_property>
+      <obj_property name="ObjectShortName">PC[31:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/LW_test/RV/i_d_mem/Instr" type="array">
       <obj_property name="ElementShortName">Instr[31:0]</obj_property>
       <obj_property name="ObjectShortName">Instr[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LW_test/RV/C_U/mfsm/State" type="array">
+      <obj_property name="ElementShortName">State[3:0]</obj_property>
+      <obj_property name="ObjectShortName">State[3:0]</obj_property>
    </wvobject>
    <wvobject fp_name="/LW_test/RV/rf/regs[10]" type="array">
       <obj_property name="DisplayName">label</obj_property>
@@ -42,54 +46,10 @@
       <obj_property name="ObjectShortName">[10][31:0]</obj_property>
       <obj_property name="label">RF[10]</obj_property>
    </wvobject>
-   <wvobject fp_name="/LW_test/RV/PCNext_PC/D" type="array">
+   <wvobject fp_name="/LW_test/RV/rf/regs[3]" type="array">
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="ElementShortName">D[31:0]</obj_property>
-      <obj_property name="ObjectShortName">D[31:0]</obj_property>
-      <obj_property name="label">PC</obj_property>
-   </wvobject>
-   <wvobject fp_name="/LW_test/RV/i_d_mem/A" type="array">
-      <obj_property name="ElementShortName">A[31:0]</obj_property>
-      <obj_property name="ObjectShortName">A[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/LW_test/RV/i_d_mem/Aint" type="array">
-      <obj_property name="ElementShortName">Aint[12:0]</obj_property>
-      <obj_property name="ObjectShortName">Aint[12:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/LW_test/RV/i_d_mem/Data" type="array">
-      <obj_property name="ElementShortName">Data[31:0]</obj_property>
-      <obj_property name="ObjectShortName">Data[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/LW_test/RV/AdrSrc" type="logic">
-      <obj_property name="ElementShortName">AdrSrc</obj_property>
-      <obj_property name="ObjectShortName">AdrSrc</obj_property>
-   </wvobject>
-   <wvobject fp_name="/LW_test/RV/rf/A1" type="array">
-      <obj_property name="ElementShortName">A1[4:0]</obj_property>
-      <obj_property name="ObjectShortName">A1[4:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/LW_test/RV/rf/WD3" type="array">
-      <obj_property name="ElementShortName">WD3[31:0]</obj_property>
-      <obj_property name="ObjectShortName">WD3[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/LW_test/RV/rf/WE3" type="logic">
-      <obj_property name="ElementShortName">WE3</obj_property>
-      <obj_property name="ObjectShortName">WE3</obj_property>
-   </wvobject>
-   <wvobject fp_name="/LW_test/RV/rf/RD1" type="array">
-      <obj_property name="ElementShortName">RD1[31:0]</obj_property>
-      <obj_property name="ObjectShortName">RD1[31:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/LW_test/RV/C_U/mfsm/State" type="array">
-      <obj_property name="ElementShortName">State[3:0]</obj_property>
-      <obj_property name="ObjectShortName">State[3:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/LW_test/RV/C_U/op" type="array">
-      <obj_property name="ElementShortName">op[6:0]</obj_property>
-      <obj_property name="ObjectShortName">op[6:0]</obj_property>
-   </wvobject>
-   <wvobject fp_name="/LW_test/RV/xtnd/ImmSrc" type="array">
-      <obj_property name="ElementShortName">ImmSrc[1:0]</obj_property>
-      <obj_property name="ObjectShortName">ImmSrc[1:0]</obj_property>
+      <obj_property name="ElementShortName">[3][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[3][31:0]</obj_property>
+      <obj_property name="label">SW_LW_[3]</obj_property>
    </wvobject>
 </wave_config>
