@@ -24,40 +24,41 @@
 //-run post synthesis simulation
 
 
-module RISC_V_top(input logic CLK, reset  
-                    );
+module RISC_V_top(input logic CLK, reset);
                     
-    logic [31:0] PC, Adr,/*ReadData*/ Data, OldPC, Instr, ImmExt, WriteData, A, SrcA, SrcB, ALUResult, ALUOut, Result;
-    logic Zero, RegWrite, IRWrite, MemWrite, AdrSrc, PCWrite, RD1, RD2;
-    logic [1:0] ResultSrc, ALUControl, ALUSrcA, ALUSrcB, ImmSrc;
+    logic [31:0] PC, Adr,/*ReadData*/ Data, OldPC, Instr, ImmExt;
+    logic [31:0] RD1, RD2, WriteData, A, SrcA, SrcB, ALUResult, ALUOut, Result;
+    logic Zero, RegWrite, IRWrite, MemWrite, AdrSrc, PCWrite;
+    logic [1:0] ResultSrc, ALUSrcA, ALUSrcB, ImmSrc;
+    logic [2:0] ALUControl;
     
                         //Result == PCNext
-    register PCNext_PC(.Q(Result),.D(PC),.clk(CLK), .rst(reset), .en(PCWrite));                
+    register PCNext_PC(.D(Result),.Q(PC),.clk(CLK), .rst(reset), .en(PCWrite));                
     
     mux_2 PC_Adr(.A(PC), .B(Result), .SEL(AdrSrc), .Y(Adr));
     
     instr_data_memory i_d_mem(.A(Adr), .WD(WriteData), .clk(CLK), .WE(MemWrite), .IRWrite(IRWrite), .Instr(Instr), .Data(Data));
     
-    register PC_OldPC (.Q(PC),.D(OldPC), .clk(CLK), .rst(reset), .en(IRWrite));
+    register PC_OldPC (.D(PC),.Q(OldPC), .clk(CLK), .rst(reset), .en(IRWrite));
     
     Control_Unit C_U(.op(Instr[6:0]), .funct3(Instr[14:12]), .funct7_5(Instr[30]), .Zero(Zero), .rst(reset), .clk(CLK), .PCWrite(PCWrite), .RegWrite(RegWrite), .MemWrite(MemWrite), .IRWrite(IRWrite), .AdrSrc(AdrSrc),
              .ResultSrc(ResultSrc), .ALUSrcB(ALUSrcB), .ALUSrcA(ALUSrcA), .ALUControl(ALUControl), .ImmSrc(ImmSrc));
              
-    register_file(.A1(Instr[19:15]),.A2(Instr[24:20]),.A3(Instr[11:7]), .WD3(Result), .clk(CLK), .WE3(RegWrite) , .RD1(RD1), .RD2(RD2));
+    register_file rf(.A1(Instr[19:15]),.A2(Instr[24:20]),.A3(Instr[11:7]), .WD3(Result), .clk(CLK), .WE3(RegWrite) , .RD1(RD1), .RD2(RD2));
     
-    register RD1_A(.Q(RD1), .D(A), .clk(CLK), .rst(reset), .en(1));
-    register RD2_WriteData(.Q(RD2), .D(WriteData), .clk(CLK), .rst(reset), .en(1));
+    register RD1_A(.D(RD1), .Q(A), .clk(CLK), .rst(reset), .en(1'b1));
+    register RD2_WriteData(.D(RD2), .Q(WriteData), .clk(CLK), .rst(reset), .en(1'b1));
     
     extend xtnd(.instr(Instr[31:7]), .ImmSrc(ImmSrc), .ImmExt(ImmExt));
     
     mux_3 A_SrcA(.A(PC), .B(OldPC),.C(A), .SEL(ALUSrcA), .Y(SrcA));
-    mux_3 WriteData_SrcB(.A(WriteData), .B(ImmExt),.C(3'd4), .SEL(ALUSrcB), .Y(SrcA)); 
+    mux_3 WriteData_SrcB(.A(WriteData), .B(ImmExt),.C(32'd4), .SEL(ALUSrcB), .Y(SrcB)); 
     
     ALU ALU1 (.ALUControl(ALUControl), .SrcA(SrcA), .SrcB(SrcB), .ALUResult(ALUResult), .zero(Zero));               
     
-    register ALUResult_ALUOut(.Q(ALUResult), .D(ALUOut), .clk(CLK), .rst(reset), .en(1));
+    register ALUResult_ALUOut(.D(ALUResult), .Q(ALUOut), .clk(CLK), .rst(reset), .en(1'b1));
     
-    mux_3 ALUOut_Result (.A(ALUOut), .B(Data), .C(ALUResult), .SEL(Result_Src), .Y(Result));
+    mux_3 ALUOut_Result (.A(ALUOut), .B(Data), .C(ALUResult), .SEL(ResultSrc), .Y(Result));
     
     
                   
@@ -82,7 +83,10 @@ module register_file(input logic [4:0] A1,A2,A3,input logic [31:0] WD3, input lo
    //[1:31] bc i never access the 0,
    //if i do combinational reading im synthetizing LOOT table's 
    //a way to avoid this is to do synchronic reading with the non architectural
-   //registers inside the module  
+   //registers inside the module 
+   initial begin
+        $readmemb("initial_register_file.mem",regs);
+   end 
     
     always_comb
         if (A1 != 5'b00000)
@@ -113,10 +117,16 @@ endmodule:register_file
 module instr_data_memory(input logic [31:0] A, WD, input logic clk, WE, IRWrite,
                          output logic [31:0] Instr, Data);
                          
-    logic [12:0] Aint = A[12:0];// to avoid indexing non existing data.
+    logic [12:0] Aint;
  
     logic [31:0] mem [8192];//should I verify A limits?          //PC value goes from 0 to 2^32 - 1 = 4294967295
 
+    initial begin
+        $readmemb("initial_data_i_files.mem",mem);
+    end 
+    
+    assign Aint = A[12:0];// to avoid indexing non existing data.
+    
     always_ff @(posedge clk) begin //non-architectural registers inside the module
         Data <= mem[Aint];
         if (IRWrite)
@@ -147,6 +157,8 @@ module extend(input logic [1:0] ImmSrc, input logic [31:7] instr, output logic [
             2'b10: ImmExt = {{20{instr[31]}}, instr[7], instr[30:25], instr[11:8], 1'b0};
 
             2'b11: ImmExt = {{12{instr[31]}}, instr[19:12], instr[20], instr[30:21], 1'b0};
+            
+            2'bx:  ImmExt = 32'hx;
         endcase
 endmodule 
 
@@ -185,6 +197,7 @@ module instr_decoder(input logic[6:0] op,
             7'd51: ImmSrc = 2'bxx;
             7'd99: ImmSrc = 2'b10;
             //insert more instructions
+            7'bx:  ImmSrc = 2'bx;
         endcase        
          
 endmodule 
@@ -225,7 +238,7 @@ module main_FSM(input logic [6:0] op, input logic rst, clk,
     enum logic [3:0]{S0, S1, S2, S3, S4, S5, S6, S7, S8, S9, S10} State, NextState;
     
     
-    always_ff @(posedge clk, posedge rst) begin
+    always_ff @(posedge clk) begin
         if(rst)
             State <= S0;
         else
@@ -261,7 +274,7 @@ module main_FSM(input logic [6:0] op, input logic rst, clk,
                     //Write enable signals(default 0)
                     RegWrite = 0;
                     MemWrite = 0;
-                    IRWrite = 0;
+                    IRWrite = 0;//it should be 0
                     PCUpdate = 0;
                     Branch = 0;
                     
@@ -276,11 +289,11 @@ module main_FSM(input logic [6:0] op, input logic rst, clk,
                     
                    
                     //Next State
-                    NextState = S1;
+                    NextState = S2;
                 end
                 
                 
-            S2: begin
+            S2: begin //MemAdr
                 
                 //Write enable signals(default 0)
                     RegWrite = 0;
@@ -305,7 +318,7 @@ module main_FSM(input logic [6:0] op, input logic rst, clk,
                 
                 end
 
-            S3: begin
+            S3: begin//MemRead
                 
                 //Write enable signals(default 0)
                     RegWrite = 0;
@@ -330,7 +343,7 @@ module main_FSM(input logic [6:0] op, input logic rst, clk,
                 
                 end
 
-            S4: begin
+            S4: begin //MemWB
                 
                 //Write enable signals(default 0)
                     RegWrite = 1;
@@ -353,7 +366,39 @@ module main_FSM(input logic [6:0] op, input logic rst, clk,
                     NextState = S0;
                 
                 
-                end                               
+                end
+                
+                
+                
+                
+                
+                
+                
+            4'bx: begin
+                
+                //Write enable signals(default 0)
+                    RegWrite = 0;
+                    MemWrite = 0;
+                    IRWrite = 0;
+                    PCUpdate = 0;
+                    Branch = 0;
+                    
+                    //Other signals (default X)
+                    
+                    AdrSrc = 1'bx;//1 bit
+                    
+                    ResultSrc = 2'bxx; //2 bit
+                    ALUSrcA = 2'bxx;
+                    ALUSrcB = 2'bxx;
+                    ALUOp = 2'bxx;
+                    
+                   
+                    //Next State
+                    //NextState = 4'bx;
+                
+                
+                end
+                                               
                 
                    
                 
@@ -375,12 +420,12 @@ module Control_Unit(input logic [6:0]op, input logic [14:12]funct3, input logic 
     logic Branch, PCUpdate, aux1;
     logic [1:0] ALUOp;
     
-    main_FSM(.op(op),.rst(rst), .clk(clk),.Branch(Branch), .PCUpdate(PCUpdate), .RegWrite(RegWrite), .MemWrite(MemWrite), .IRWrite(IRWrite), .AdrSrc(AdrSrc),
+    main_FSM mfsm(.op(op),.rst(rst), .clk(clk),.Branch(Branch), .PCUpdate(PCUpdate), .RegWrite(RegWrite), .MemWrite(MemWrite), .IRWrite(IRWrite), .AdrSrc(AdrSrc),
              .ResultSrc(ResultSrc), .ALUSrcB(ALUSrcB), .ALUSrcA(ALUSrcA), .ALUOp(ALUOp));
     
     ALU_decoder ALU_dec(.ALUop(ALUOp), .funct3(funct3), .funct7_5(funct7_5), .op_5(op[5]), .ALUControl(ALUControl));
     
-    instr_decoder(.op(op), .ImmSrc(ImmSrc));
+    instr_decoder id(.op(op), .ImmSrc(ImmSrc));
     
     and a1(aux1, Zero, Branch);
     or o1 (PCWrite, aux1, PCUpdate);
@@ -403,6 +448,8 @@ module mux_3(input logic [31:0] A, B, C, input logic [1:0] SEL, output logic [31
                 Y = B;
             2'b10:
                 Y = C;
+            2'bxx:
+                Y = 32'hxxxxxxxx;
         endcase  
     end
 endmodule
