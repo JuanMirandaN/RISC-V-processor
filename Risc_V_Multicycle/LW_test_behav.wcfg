@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="69.162 ns"></ZoomStartTime>
-      <ZoomEndTime time="190.707 ns"></ZoomEndTime>
-      <Cursor1Time time="161.727 ns"></Cursor1Time>
+      <ZoomStartTime time="346.529 ns"></ZoomStartTime>
+      <ZoomEndTime time="569.892 ns"></ZoomEndTime>
+      <Cursor1Time time="538.173 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="142"></NameColumnWidth>
-      <ValueColumnWidth column_width="90"></ValueColumnWidth>
+      <NameColumnWidth column_width="226"></NameColumnWidth>
+      <ValueColumnWidth column_width="108"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="7" />
+   <WVObjectSize size="11" />
    <wvobject fp_name="/LW_test/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -40,16 +40,40 @@
       <obj_property name="ElementShortName">State[3:0]</obj_property>
       <obj_property name="ObjectShortName">State[3:0]</obj_property>
    </wvobject>
+   <wvobject fp_name="/LW_test/RV/C_U/op" type="array">
+      <obj_property name="ElementShortName">op[6:0]</obj_property>
+      <obj_property name="ObjectShortName">op[6:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LW_test/RV/rf/regs[3]" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">[3][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[3][31:0]</obj_property>
+      <obj_property name="label">sw-&gt;lw [3]</obj_property>
+   </wvobject>
    <wvobject fp_name="/LW_test/RV/rf/regs[10]" type="array">
       <obj_property name="DisplayName">label</obj_property>
       <obj_property name="ElementShortName">[10][31:0]</obj_property>
       <obj_property name="ObjectShortName">[10][31:0]</obj_property>
       <obj_property name="label">RF[10]</obj_property>
    </wvobject>
-   <wvobject fp_name="/LW_test/RV/rf/regs[3]" type="array">
+   <wvobject fp_name="/LW_test/RV/rf/regs[6]" type="array">
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="ElementShortName">[3][31:0]</obj_property>
-      <obj_property name="ObjectShortName">[3][31:0]</obj_property>
-      <obj_property name="label">SW_LW_[3]</obj_property>
+      <obj_property name="ElementShortName">[6][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[6][31:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FF0080</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+      <obj_property name="label">x4 + x5</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LW_test/RV/rf/regs[7]" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">[7][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[7][31:0]</obj_property>
+      <obj_property name="label">x5 - x4</obj_property>
+   </wvobject>
+   <wvobject fp_name="/LW_test/RV/rf/regs[8]" type="array">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">[8][31:0]</obj_property>
+      <obj_property name="ObjectShortName">[8][31:0]</obj_property>
+      <obj_property name="label">x7 + 20</obj_property>
    </wvobject>
 </wave_config>

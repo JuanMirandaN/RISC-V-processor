@@ -193,6 +193,7 @@ module instr_decoder(input logic[6:0] op,
     always_comb 
         unique case(op)
             7'd3: ImmSrc = 2'b00;
+            7'd19: ImmSrc = 2'b00;
             7'd35: ImmSrc = 2'b01;
             7'd51: ImmSrc = 2'bxx;
             7'd99: ImmSrc = 2'b10;
@@ -295,6 +296,10 @@ module main_FSM(input logic [6:0] op, input logic rst, clk,
                         NextState = S6;
                     else if(op == 7'b1100011)
                         NextState = S10;
+                    else if(op == 7'b0010011)
+                        NextState = S8;
+                    else if(op == 7'b1101111)
+                        NextState = S9;
                 end
                 
                 
@@ -446,6 +451,54 @@ module main_FSM(input logic [6:0] op, input logic rst, clk,
                     NextState = S0;
                
                 end
+                
+            S8: begin //ExecuteI
+                
+                //Write enable signals(default 0)
+                    RegWrite = 0;
+                    MemWrite = 0;
+                    IRWrite = 0;
+                    PCUpdate = 0;
+                    Branch = 0;
+                    
+                    //Other signals (default X)
+                    
+                    AdrSrc = 1'bx;//1 bit
+                    
+                    ResultSrc = 2'bx; //2 bit
+                    ALUSrcA = 2'b10;
+                    ALUSrcB = 2'b01;
+                    ALUOp = 2'b10;
+                    
+                   
+                    //Next State
+                    NextState = S7;
+               
+                end
+                
+            S9: begin //JAL
+                
+                //Write enable signals(default 0)
+                    RegWrite = 0;
+                    MemWrite = 0;
+                    IRWrite = 0;
+                    PCUpdate = 1;
+                    Branch = 0;
+                    
+                    //Other signals (default X)
+                    
+                    AdrSrc = 1'bx;//1 bit
+                    
+                    ResultSrc = 2'b00; //2 bit
+                    ALUSrcA = 2'b01;
+                    ALUSrcB = 2'b10;
+                    ALUOp = 2'b00;
+                    
+                   
+                    //Next State
+                    NextState = S7;
+               
+                end                                
             S10: begin //BEQ
                 
                 //Write enable signals(default 0)
