@@ -293,6 +293,8 @@ module main_FSM(input logic [6:0] op, input logic rst, clk,
                         NextState = S2;
                     else if(op == 7'b0110011)
                         NextState = S6;
+                    else if(op == 7'b1100011)
+                        NextState = S10;
                 end
                 
                 
@@ -444,23 +446,23 @@ module main_FSM(input logic [6:0] op, input logic rst, clk,
                     NextState = S0;
                
                 end
-            S8: begin //ALUWB
+            S10: begin //BEQ
                 
                 //Write enable signals(default 0)
-                    RegWrite = 1;
+                    RegWrite = 0;
                     MemWrite = 0;
                     IRWrite = 0;
                     PCUpdate = 0;
-                    Branch = 0;
+                    Branch = 1;
                     
                     //Other signals (default X)
                     
                     AdrSrc = 1'bx;//1 bit
                     
                     ResultSrc = 2'b00; //2 bit
-                    ALUSrcA = 2'bx;
-                    ALUSrcB = 2'bx;
-                    ALUOp = 2'bx;
+                    ALUSrcA = 2'b10;
+                    ALUSrcB = 2'b00;
+                    ALUOp = 2'b01;
                     
                    
                     //Next State
