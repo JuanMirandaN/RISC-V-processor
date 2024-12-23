@@ -23,6 +23,7 @@
 module LW_test();
     logic clk;
     logic reset;
+    //integer N_Instructions = ;
     
     RISC_V_top RV(.CLK(clk), .reset(reset));
     
@@ -36,7 +37,7 @@ module LW_test();
     initial begin 
         #12 reset = 0;
         
-        #300
+        #460
         $finish;
     end
     

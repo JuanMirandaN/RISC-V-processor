@@ -247,7 +247,7 @@ module main_FSM(input logic [6:0] op, input logic rst, clk,
                        
     always_comb begin     
         unique case(State)
-            S0: begin //FETCH
+            S0: begin //Fetch
                     
                     //Write enable signals(default 0)
                     RegWrite = 0;
@@ -269,7 +269,7 @@ module main_FSM(input logic [6:0] op, input logic rst, clk,
                     //Next State
                     NextState = S1;
                 end
-            S1: begin //DECODE
+            S1: begin //Decode
             
                     //Write enable signals(default 0)
                     RegWrite = 0;
@@ -283,14 +283,16 @@ module main_FSM(input logic [6:0] op, input logic rst, clk,
                     AdrSrc = 1'bx;//1 bit
                     
                     ResultSrc = 2'bxx; //2 bit
-                    ALUSrcA = 2'bxx;
-                    ALUSrcB = 2'bxx;
-                    ALUOp = 2'bxx;
+                    ALUSrcA = 2'b01;
+                    ALUSrcB = 2'b01;
+                    ALUOp = 2'b00;
                     
                    
                     //Next State
                     if (op == 7'b0000011 || op == 7'b0100011)
                         NextState = S2;
+                    else if(op == 7'b0110011)
+                        NextState = S6;
                 end
                 
                 
@@ -394,7 +396,77 @@ module main_FSM(input logic [6:0] op, input logic rst, clk,
                     NextState = S0;
                 
                 
-                end 
+                end
+            S6: begin //ExecuteR
+                
+                //Write enable signals(default 0)
+                    RegWrite = 0;
+                    MemWrite = 0;
+                    IRWrite = 0;
+                    PCUpdate = 0;
+                    Branch = 0;
+                    
+                    //Other signals (default X)
+                    
+                    AdrSrc = 1'bx;//1 bit
+                    
+                    ResultSrc = 2'bxx; //2 bit
+                    ALUSrcA = 2'b10;
+                    ALUSrcB = 2'b00;
+                    ALUOp = 2'b10;
+                    
+                   
+                    //Next State
+                    NextState = S7;
+                
+                
+                end
+            S7: begin //ALUWB
+                
+                //Write enable signals(default 0)
+                    RegWrite = 1;
+                    MemWrite = 0;
+                    IRWrite = 0;
+                    PCUpdate = 0;
+                    Branch = 0;
+                    
+                    //Other signals (default X)
+                    
+                    AdrSrc = 1'bx;//1 bit
+                    
+                    ResultSrc = 2'b00; //2 bit
+                    ALUSrcA = 2'bx;
+                    ALUSrcB = 2'bx;
+                    ALUOp = 2'bx;
+                    
+                   
+                    //Next State
+                    NextState = S0;
+               
+                end
+            S8: begin //ALUWB
+                
+                //Write enable signals(default 0)
+                    RegWrite = 1;
+                    MemWrite = 0;
+                    IRWrite = 0;
+                    PCUpdate = 0;
+                    Branch = 0;
+                    
+                    //Other signals (default X)
+                    
+                    AdrSrc = 1'bx;//1 bit
+                    
+                    ResultSrc = 2'b00; //2 bit
+                    ALUSrcA = 2'bx;
+                    ALUSrcB = 2'bx;
+                    ALUOp = 2'bx;
+                    
+                   
+                    //Next State
+                    NextState = S0;
+               
+                end                                                 
      
             4'bx: begin
                 
