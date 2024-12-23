@@ -37,7 +37,7 @@ module LW_test();
     initial begin 
         #12 reset = 0;
         
-        #540
+        #760
         $finish;
     end
     
